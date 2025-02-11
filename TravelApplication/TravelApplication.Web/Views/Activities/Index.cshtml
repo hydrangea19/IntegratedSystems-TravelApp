@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TravelApplication.Domain.DTO.ActivityDTO>
+
+@{
+    ViewData["Title"] = "Activities";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Activity List</h2>
+        <a asp-action="Create" class="btn btn-success">+ Add New Activity</a> 
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Cost</th>
+                <th>Duration (Hours)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td>@item.Location</td>
+                    <td>@item.Cost.ToString("C")</td>
+                    <td>@item.DurationHours</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">View</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

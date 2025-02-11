@@ -1,0 +1,31 @@
+﻿@using TravelApplication.Domain.DTO;
+@model DestinationDTO
+
+@{
+    ViewData["Title"] = "Edit Destination";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Edit Destination</h2>
+    <form asp-action="Edit" method="post" class="mt-4">
+        <input type="hidden" asp-for="TravelId" />
+
+        <div class="mb-3">
+            <label class="form-label">Destination Name</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Country</label>
+            <input asp-for="Country" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

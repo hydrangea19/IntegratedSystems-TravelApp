@@ -1,0 +1,48 @@
+﻿@model TravelApplication.Domain.DTO.TransportDTO
+
+@{
+    ViewData["Title"] = "Create Transport";
+}
+
+<h2>Create Transport</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <input asp-for="Type" class="form-control" required />
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Departure Point</label>
+        <input asp-for="DeparturePoint" class="form-control" required />
+        <span asp-validation-for="DeparturePoint" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Arrival Point</label>
+        <input asp-for="ArrivalPoint" class="form-control" required />
+        <span asp-validation-for="ArrivalPoint" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Departure Time</label>
+        <input asp-for="DepartureTime" type="datetime-local" class="form-control" required />
+        <span asp-validation-for="DepartureTime" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Arrival Time</label>
+        <input asp-for="ArrivalTime" type="datetime-local" class="form-control" required />
+        <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cost Per Passenger</label>
+        <input asp-for="CostPerPassenger" type="number" step="0.01" class="form-control" required />
+        <span asp-validation-for="CostPerPassenger" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

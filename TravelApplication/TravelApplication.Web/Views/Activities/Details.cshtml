@@ -1,0 +1,36 @@
+﻿@model TravelApplication.Domain.DTO.ActivityDTO
+
+@{
+    ViewData["Title"] = "Activity Details";
+}
+
+<h2 class="text-center">Activity Details</h2>
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">Name:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3 fw-bold">Description:</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3 fw-bold">Date:</dt>
+            <dd class="col-sm-9">@Model.Date.ToString("MMMM dd, yyyy")</dd>
+
+            <dt class="col-sm-3 fw-bold">Location:</dt>
+            <dd class="col-sm-9">@Model.Location</dd>
+
+            <dt class="col-sm-3 fw-bold">Cost:</dt>
+            <dd class="col-sm-9">@Model.Cost.ToString("C")</dd>
+
+            <dt class="col-sm-3 fw-bold">Duration (Hours):</dt>
+            <dd class="col-sm-9">@Model.DurationHours</dd>
+        </dl>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+    </div>
+</div>

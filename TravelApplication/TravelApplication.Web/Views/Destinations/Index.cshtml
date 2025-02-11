@@ -1,0 +1,35 @@
+﻿@using TravelApplication.Domain.DTO;
+@model IEnumerable<DestinationDTO>
+
+@{
+    ViewData["Title"] = "Destinations";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Explore Our Destinations</h2>
+        <a asp-action="Create" class="btn btn-success">+ Add New Destination</a> 
+    </div>
+
+    <div class="row">
+        @foreach (var destination in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="@destination.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@destination.Name</h5>
+                        <p class="card-text"><strong>Location:</strong> @destination.Country</p>
+                        <p class="card-text">@destination.Description</p>
+                        <p class="card-text text-success"><strong>Starting from: $XXX.XX</strong></p>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@destination.TravelId" class="btn btn-info">View Details</a> 
+                            <a asp-action="Edit" asp-route-id="@destination.TravelId" class="btn btn-warning">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

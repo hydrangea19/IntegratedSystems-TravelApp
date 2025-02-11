@@ -1,0 +1,23 @@
+﻿@using TravelApplication.Domain.DTO;
+@model AccommodationDTO
+
+@{
+    ViewData["Title"] = "Accommodation Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@Model.Name</h2>
+    <div class="card shadow-lg mt-3">
+        <div class="card-body">
+            <h5 class="card-title"><strong>Type:</strong> @Model.Type</h5>
+            <p class="card-text text-success"><strong>Price Per Night:</strong> $@Model.price</p>
+            <p class="card-text"><strong>Destination:</strong> @Model.DestinationId</p>
+
+            <div class="d-flex justify-content-between mt-3">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
