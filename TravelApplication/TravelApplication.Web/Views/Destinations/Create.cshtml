@@ -6,7 +6,7 @@
 
 <h2>Create New Destination</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Destination Name</label>
         <input asp-for="Name" class="form-control" required />
@@ -23,6 +23,34 @@
         <label asp-for="Description" class="form-label">Description</label>
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" type="number" step="0.01" class="form-control" required />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedActivityIds" class="form-label">Activities</label>
+        <select asp-for="SelectedActivityIds" class="form-control" asp-items="ViewBag.Activities" multiple>
+            <option value="">-- Select Activities --</option>
+        </select>
+        <span asp-validation-for="SelectedActivityIds" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedTransportIds" class="form-label">Transports</label>
+        <select asp-for="SelectedTransportIds" class="form-control" asp-items="ViewBag.Transports" multiple>
+            <option value="">-- Select Transports --</option>
+        </select>
+        <span asp-validation-for="SelectedTransportIds" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>

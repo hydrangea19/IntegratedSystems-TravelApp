@@ -1,31 +1,65 @@
-﻿@using TravelApplication.Domain.DTO;
-@model DestinationDTO
+﻿@model TravelApplication.Domain.DTO.DestinationDTO
 
 @{
     ViewData["Title"] = "Edit Destination";
 }
 
-<div class="container mt-4">
-    <h2 class="text-center">Edit Destination</h2>
-    <form asp-action="Edit" method="post" class="mt-4">
-        <input type="hidden" asp-for="TravelId" />
+<h2>Edit Destination</h2>
 
-        <div class="mb-3">
-            <label class="form-label">Destination Name</label>
-            <input asp-for="Name" class="form-control" required />
-        </div>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    
+    <input type="hidden" asp-for="TravelId" />
 
-        <div class="mb-3">
-            <label class="form-label">Country</label>
-            <input asp-for="Country" class="form-control" required />
-        </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Destination Name</label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-        </div>
+    <div class="mb-3">
+        <label asp-for="Country" class="form-label">Country</label>
+        <input asp-for="Country" class="form-control" required />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" type="number" step="0.01" class="form-control" required />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedActivityIds" class="form-label">Activities</label>
+        <select asp-for="SelectedActivityIds" class="form-control" asp-items="ViewBag.Activities" multiple>
+            <option value="">-- Select Activities --</option>
+        </select>
+        <span asp-validation-for="SelectedActivityIds" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedTransportIds" class="form-label">Transports</label>
+        <select asp-for="SelectedTransportIds" class="form-control" asp-items="ViewBag.Transports" multiple>
+            <option value="">-- Select Transports --</option>
+        </select>
+        <span asp-validation-for="SelectedTransportIds" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

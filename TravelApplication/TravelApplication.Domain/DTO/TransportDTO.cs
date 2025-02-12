@@ -8,7 +8,7 @@ namespace TravelApplication.Domain.DTO
 {
     public class TransportDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Type { get; set; }
         public string DeparturePoint { get; set; }
         public string ArrivalPoint { get; set; }

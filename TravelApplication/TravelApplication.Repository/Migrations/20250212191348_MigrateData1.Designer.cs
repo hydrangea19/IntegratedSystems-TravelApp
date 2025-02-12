@@ -12,7 +12,7 @@ using TravelApplication.Repository;
 namespace TravelApplication.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250210204040_MigrateData1")]
+    [Migration("20250212191348_MigrateData1")]
     partial class MigrateData1
     {
         /// <inheritdoc />
@@ -56,11 +56,9 @@ namespace TravelApplication.Repository.Migrations
 
             modelBuilder.Entity("TravelApplication.Domain.Domain.Activity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Cost")
                         .HasPrecision(18, 2)
@@ -103,22 +101,57 @@ namespace TravelApplication.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("TravelId");
 
                     b.ToTable("Destinations");
                 });
 
+            modelBuilder.Entity("TravelApplication.Domain.Domain.DestinationActivity", b =>
+                {
+                    b.Property<Guid>("DestinationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DestinationId", "ActivityId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("DestinationActivities");
+                });
+
+            modelBuilder.Entity("TravelApplication.Domain.Domain.DestinationTransport", b =>
+                {
+                    b.Property<Guid>("DestinationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TransportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DestinationId", "TransportId");
+
+                    b.HasIndex("TransportId");
+
+                    b.ToTable("DestinationTransports");
+                });
+
             modelBuilder.Entity("TravelApplication.Domain.Domain.Transport", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ArrivalPoint")
                         .IsRequired()
@@ -150,7 +183,7 @@ namespace TravelApplication.Repository.Migrations
             modelBuilder.Entity("TravelApplication.Domain.Domain.Accommodation", b =>
                 {
                     b.HasOne("TravelApplication.Domain.Domain.Destination", "Destination")
-                        .WithMany("Accomodations")
+                        .WithMany("Accommodations")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -158,9 +191,61 @@ namespace TravelApplication.Repository.Migrations
                     b.Navigation("Destination");
                 });
 
+            modelBuilder.Entity("TravelApplication.Domain.Domain.DestinationActivity", b =>
+                {
+                    b.HasOne("TravelApplication.Domain.Domain.Activity", "Activity")
+                        .WithMany("DestinationActivities")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelApplication.Domain.Domain.Destination", "Destination")
+                        .WithMany("DestinationActivities")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Destination");
+                });
+
+            modelBuilder.Entity("TravelApplication.Domain.Domain.DestinationTransport", b =>
+                {
+                    b.HasOne("TravelApplication.Domain.Domain.Destination", "Destination")
+                        .WithMany("DestinationTransports")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelApplication.Domain.Domain.Transport", "Transport")
+                        .WithMany("DestinationTransports")
+                        .HasForeignKey("TransportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("Transport");
+                });
+
+            modelBuilder.Entity("TravelApplication.Domain.Domain.Activity", b =>
+                {
+                    b.Navigation("DestinationActivities");
+                });
+
             modelBuilder.Entity("TravelApplication.Domain.Domain.Destination", b =>
                 {
-                    b.Navigation("Accomodations");
+                    b.Navigation("Accommodations");
+
+                    b.Navigation("DestinationActivities");
+
+                    b.Navigation("DestinationTransports");
+                });
+
+            modelBuilder.Entity("TravelApplication.Domain.Domain.Transport", b =>
+                {
+                    b.Navigation("DestinationTransports");
                 });
 #pragma warning restore 612, 618
         }

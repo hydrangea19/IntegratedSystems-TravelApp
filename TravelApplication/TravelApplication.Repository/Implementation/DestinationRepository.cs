@@ -37,12 +37,12 @@ namespace TravelApplication.Repository.Implementation
 
         public async Task<IEnumerable<Destination>> GetAllAsync()
         {
-            return await _context.Destinations.Include(d => d.Accomodations).ToListAsync();
+            return await _context.Destinations.Include(d => d.Accommodations).ToListAsync();
         }
 
         public async Task<Destination?> GetByIdAsync(Guid travelId)
         {
-            return await _context.Destinations.Include(d => d.Accomodations).FirstOrDefaultAsync(d => d.TravelId == travelId);
+            return await _context.Destinations.Include(d => d.Accommodations).FirstOrDefaultAsync(d => d.TravelId == travelId);
         }
 
         public async Task UpdateAsync(Destination destination)

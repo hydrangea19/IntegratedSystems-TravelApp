@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace TravelApplication.Repository.Implementation
             return await _context.Activities.ToListAsync();
         }
 
-        public async Task<Activity> GetByIdAsync(int id)
+        public async Task<Activity> GetByIdAsync(Guid id) 
         {
             return await _context.Activities.FindAsync(id);
         }
@@ -38,7 +39,7 @@ namespace TravelApplication.Repository.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id) 
         {
             var activity = await GetByIdAsync(id);
             if (activity == null) return false;
@@ -49,4 +50,3 @@ namespace TravelApplication.Repository.Implementation
         }
     }
 }
-

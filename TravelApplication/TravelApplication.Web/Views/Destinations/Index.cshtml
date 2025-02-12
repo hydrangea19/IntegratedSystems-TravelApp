@@ -12,24 +12,26 @@
     </div>
 
     <div class="row">
-        @foreach (var destination in Model)
-        {
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="@destination.Name">
-                    <div class="card-body">
-                        <h5 class="card-title">@destination.Name</h5>
-                        <p class="card-text"><strong>Location:</strong> @destination.Country</p>
-                        <p class="card-text">@destination.Description</p>
-                        <p class="card-text text-success"><strong>Starting from: $XXX.XX</strong></p>
+        <div class="row">
+            @foreach (var destination in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="@destination.ImageUrl" class="card-img-top" alt="@destination.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@destination.Name</h5>
+                            <p class="card-text"><strong>Location:</strong> @destination.Country</p>
+                            <p class="card-text">@destination.Description</p>
+                            <p class="card-text text-success"><strong>Starting from: $@destination.Price</strong></p> <!-- ✅ Display Price -->
 
-                        <div class="d-flex justify-content-between">
-                            <a asp-action="Details" asp-route-id="@destination.TravelId" class="btn btn-info">View Details</a> 
-                            <a asp-action="Edit" asp-route-id="@destination.TravelId" class="btn btn-warning">Edit</a>
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Details" asp-route-id="@destination.TravelId" class="btn btn-info">View Details</a>
+                                <a asp-action="Edit" asp-route-id="@destination.TravelId" class="btn btn-warning">Edit</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>

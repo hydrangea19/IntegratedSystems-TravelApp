@@ -11,53 +11,51 @@ using TravelApplication.Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 Get Connection String from appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// 🔹 Configure Database Context with Explicit Migrations Assembly
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, b => b.MigrationsAssembly("TravelApplication.Repository")));
 
-// 🔹 Configure Identity (Authentication)
+
 builder.Services.AddDefaultIdentity<TravelApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
 })
-.AddRoles<IdentityRole>() // ✅ Enables Role-Based Authorization
+.AddRoles<IdentityRole>() 
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// 🔹 Register Repositories (Dependency Injection)
 builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 builder.Services.AddScoped<ITransportRepository, TransportRepository>();
+builder.Services.AddScoped<IDestinationActivityRepository, DestinationActivityRepository>();
+builder.Services.AddScoped<IDestinationTransportRepository, DestinationTransportRepository>();
+builder.Services.AddScoped<IDestinationTransportRepository, DestinationTransportRepository>();
 
-// 🔹 Register Services (Dependency Injection) ✅ Fixed naming issues
-builder.Services.AddScoped<IDestinationService, DestinationServices>(); // 🔹 Corrected from DestinationServices
-builder.Services.AddScoped<IAccommodationService, AccommodationServices>(); // 🔹 Corrected from AccommodationServices
+builder.Services.AddScoped<IDestinationService, DestinationServices>(); 
+builder.Services.AddScoped<IAccommodationService, AccommodationServices>(); 
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<ITransportService, TransportService>();
-// 🔹 Add Controllers & Views for MVC Support
+builder.Services.AddScoped<IDestinationActivityService, DestinationActivityService>();
+builder.Services.AddScoped<IDestinationTransportService, DestinationTransportService>();
+
+
 builder.Services.AddControllersWithViews();
 
-// Build the application
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-// Middleware Configuration
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Configure MVC Routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

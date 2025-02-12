@@ -12,34 +12,53 @@ namespace TravelApplication.Repository
 
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Accommodation> Accommodations { get; set; }
-        public DbSet<Activity> Activities { get; set; } // Ensure this is included
+        public DbSet<Activity> Activities { get; set; }
         public DbSet<Transport> Transports { get; set; }
+        public DbSet<DestinationActivity> DestinationActivities { get; set; }
+        public DbSet<DestinationTransport> DestinationTransports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-
-            // Configure the primary key for Destination
             modelBuilder.Entity<Destination>()
                 .HasKey(d => d.TravelId);
 
-            // Configure the primary key for Accommodation
-            modelBuilder.Entity<Accommodation>()
-                .HasKey(a => a.Id);
-
-            // Configure the relationship between Accommodation and Destination
             modelBuilder.Entity<Accommodation>()
                 .HasOne(a => a.Destination)
-                .WithMany(d => d.Accomodations)
+                .WithMany(d => d.Accommodations)
                 .HasForeignKey(a => a.DestinationId);
 
-            // Configure decimal precision for Activity.Cost
+            modelBuilder.Entity<DestinationActivity>()
+           .HasKey(da => new { da.DestinationId, da.ActivityId });
+
+            modelBuilder.Entity<DestinationActivity>()
+                .HasOne(da => da.Destination)
+                .WithMany(d => d.DestinationActivities)
+                .HasForeignKey(da => da.DestinationId);
+
+            modelBuilder.Entity<DestinationActivity>()
+                .HasOne(da => da.Activity)
+                .WithMany(a => a.DestinationActivities)
+                .HasForeignKey(da => da.ActivityId);
+
+            modelBuilder.Entity<DestinationTransport>()
+        .HasKey(dt => new { dt.DestinationId, dt.TransportId });
+
+            modelBuilder.Entity<DestinationTransport>()
+                .HasOne(dt => dt.Destination)
+                .WithMany(d => d.DestinationTransports)
+                .HasForeignKey(dt => dt.DestinationId);
+
+            modelBuilder.Entity<DestinationTransport>()
+                .HasOne(dt => dt.Transport)
+                .WithMany(t => t.DestinationTransports)
+                .HasForeignKey(dt => dt.TransportId);
+
             modelBuilder.Entity<Activity>()
                 .Property(a => a.Cost)
-                .HasPrecision(18, 2); // 18 total digits, 2 decimal places
+                .HasPrecision(18, 2);
 
-            // Configure decimal precision for Transport.CostPerPassenger
             modelBuilder.Entity<Transport>()
                 .Property(t => t.CostPerPassenger)
                 .HasPrecision(18, 2);
