@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TravelApplication.Web.Models;
+using TravelApplication.Domain;
 
 namespace TravelApplication.Web.Controllers
 {
